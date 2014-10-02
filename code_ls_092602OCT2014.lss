@@ -1,0 +1,21 @@
+Option Public
+Sub Initialize
+	
+	Dim session As New NotesSession
+	Dim workspace As New NotesUIWorkspace
+	Dim dc As NotesDocumentCollection
+	Dim uiview As NotesUIView
+	Dim reqDoc As NotesDocument 
+	
+	' pick up the Documents in the View. 
+	Set uiview = workspace.Currentview
+	Set dc = uiview.Documents
+	Set reqdoc = dc.GetFirstDocument
+	
+	While Not reqdoc Is Nothing  'loop while there are documents in reqView
+		Call reqdoc.ComputeWithForm(True, False)
+		Call reqdoc.Save(True,False) ' save the document 
+		Set reqDoc =  dc.GetNextDocument(reqDoc)
+	Wend
+	
+End Sub
